@@ -1,6 +1,5 @@
 # MicroprocessorLab
 Solutions for Microprocessor Lab Assignments.
-
 ‌
 * This repository contains solutions for microprocessor lab assignments.
 * Every solution contains a Proteus file and the CodeVisionAVR project.
