@@ -1,0 +1,59 @@
+/*******************************************************
+Project : Project1-LEDs-AlirezaMajari-962023038
+Version : 1.00
+Date    : 12/9/2020
+Author  : Alireza Majari
+Company : P48
+Comments: 
+This is assignment#1 of Microprocessor Lab.
+kharazmi University of tehran
+
+
+Chip type               : ATmega16
+Program type            : Application
+AVR Core Clock frequency: 12.000000 MHz
+Memory model            : Small
+External RAM size       : 0
+Data Stack size         : 256
+*******************************************************/
+
+#include <mega16.h>
+#include <delay.h>
+
+// Declare your global variables here
+int delay;
+int status;
+
+void main(void)
+{
+    delay =  25;     
+    status = 0x00;
+
+    DDRA = 0x00;   
+    PINA = 0x00;  
+       
+    DDRB = 0xff;  
+    PORTB = 0x00;
+    
+    #asm("sei")
+
+    while (1) {  
+            if(PINA.0==1) //when button is pressed once     
+            {   status = 0x1;
+                while(status<=0xff) {
+                     PORTB = status; 
+                     status = status*2;
+                     delay_ms(delay);
+                }  
+                status = 0x80;
+                while(status>=0x1) {
+                     PORTB = status; 
+                     status = status/2;
+                     delay_ms(delay);
+                } 
+            } else {
+                PORTB = 0x00; 
+                status = 0x00;
+            }
+    }
+}
