@@ -1,7 +1,7 @@
-# Assignment1
+## Assignment1
 8 LED Blinking Problem
 
-# Instruction:
+## Instruction:
 We have 8 LED lights and a push button. When the button is pressed, we want the first LED light to go on. after half a second the first led light goes off and the second LED light goes on. Then the third one goes on and the second one goes off. This process will continue until the last light goes on and then the process will start in revers from the last light to the first one. 
 
 We are going to use an ATMEGA16 micro controller in this example with a 12MHz Crystal. The push button is going to be connected to PINA.0.
