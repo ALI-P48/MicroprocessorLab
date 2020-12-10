@@ -2,8 +2,11 @@
 Solutions for Microprocessor Lab Assignments.
 
 This repository contains solutions for microprocessor lab assignments.
+
 Every solution contains a Proteus file and the CodeVisionAVR project.
+
 You can use all the files under GPL-v2.0 license.
+
 These are my university assingments and I will prepare a readme file for every assignment containing the instructions.
 
 ## Table of content:
