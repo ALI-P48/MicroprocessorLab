@@ -15,11 +15,11 @@ This is the circuite:
 * **Alireza Majari** - [ALI-P48](https://github.com/ALI-P48)
 
 
-- Kharazmi University of Tehran
+-- Kharazmi University of Tehran
 
-- Supervisor: DR. Mohammad Laali
+-- Supervisor: DR. Mohammad Laali
 
-- Fall 2020
+-- Fall 2020
 
 
 
