@@ -6,7 +6,7 @@ Every solution contains a Proteus file and the CodeVisionAVR project.
 You can use all the files under GPL-v2.0 license.
 These are my university assingments and I will prepare a readme file for every assignment containing the instructions.
 
-##Table of content:
+## Table of content:
 This is the list of current compeleted assinments:
 * [Assignment1](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment1-LEDs/) - 8 LED Blinking Problem
 
