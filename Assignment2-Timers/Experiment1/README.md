@@ -1,5 +1,5 @@
 ## Assignment2 - Experiment1
-Simple one digit 7Segment counter with timer1
+Simple one-digit 7Segment counter with timer1
 
 ‌
 ## Instruction:
