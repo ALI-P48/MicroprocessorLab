@@ -10,10 +10,11 @@ This is the circuite:
 
 
 
+‌
 ## Table of content:
 * [Proteus File](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment2-Timers/Experiment1/Proteus/Timers.pdsprj)
 * [CodeVision AVR File](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment2-Timers/Experiment1/AVR/Timers.prj) 
-* [Hex File](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment2-Timers/Experiment1/AVR/Debug/ExeTimers.hex) 
+* [Hex File](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment2-Timers/Experiment1/AVR/Debug/Exe/Timers.hex) 
 
 
 ‌
