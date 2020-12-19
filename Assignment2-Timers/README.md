@@ -1,4 +1,4 @@
-## Assignment1
+## Assignment2
 Timer0 & Timer1 7Segment Experiment
 
 
