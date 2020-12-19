@@ -6,8 +6,8 @@ Timer0 & Timer1 7Segment Experiment
 ‌
 ## Experiments:
 This is the list of current compeleted assinments:
-* [Experiment1](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment2-Timers/) - Simple one-digit 7Segment counter with timer1
-* [Experiment2](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment2-Timers/) - Four-digit 7Segment counter with timer0 and timer1
+* [Experiment1](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment2-Timers/Experiment1/) - Simple one-digit 7Segment counter with timer1
+* [Experiment2](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment2-Timers/Experiment2/) - Four-digit 7Segment counter with timer0 and timer1
 
 
 ‌
