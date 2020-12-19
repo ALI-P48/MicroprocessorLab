@@ -1,0 +1,29 @@
+RAM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+_seed                                                                             0x0160       4
+
+EEPROM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                                          Register  Size
+------------------------------------------------------------------------------------------------
+num                                                                               R4,R5        2
+delay0                                                                            R6,R7        2
+delay1                                                                            R8,R9        2
+turn                                                                              R10,R11      2
+
+FLASH Allocation [words]
+Function                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+getdigit                                                                          0x00068     35
+timer0_ovf_isr                                                                    0x0008B     69
+timer1_ovf_isr                                                                    0x000D0     33
+main                                                                              0x000F1     24
+ftrunc                                                                            0x00109     49
+floor                                                                             0x0013A     19
+log                                                                               0x0014D    134
+exp                                                                               0x001D3    154
+pow                                                                               0x0026D     82

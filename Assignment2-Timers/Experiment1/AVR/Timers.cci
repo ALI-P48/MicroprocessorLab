@@ -1,0 +1,7 @@
+VERSION:3 SOURCE_TIMESTAMP:5193AB52
+NODE:I LEVEL:0 LINE:20 "C:\cvavr\inc\mega16.h"
+NODE:I LEVEL:0 LINE:21 "C:\cvavr\inc\delay.h"
+NODE:V LEVEL:0 LINE:24 "num -> R4,R5"
+NODE:V LEVEL:0 LINE:25 "delay -> R6,R7"
+NODE:F LEVEL:0 LINE:28 "timer1_ovf_isr(void)"
+NODE:F LEVEL:0 LINE:45 "main(void)"
