@@ -1,9 +1,9 @@
 ## Assignment3 - Experiment1
-Print "hwllo World!" on a LCD.
+Print "hello World!" on a LCD.
 
 ‌
 ## Instruction:
-Print "hwllo World!" on a LCD.
+Print "hello World!" on a LCD.
 
 This is the circuite:
 ![](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment3-LCDs/Experiment1/Pictures/Circuit.jpg)
