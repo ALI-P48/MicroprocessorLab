@@ -6,7 +6,8 @@ Print "hello World!" on a LCD.
 Print "hello World!" on a LCD.
 
 This is the circuite:
-![](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment3-LCDs/Experiment1/Pictures/Circuit.jpg)
+
+![](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment3-LCDs/Experiment1/Pictures/Circuit_On.jpg)
 
 
 
