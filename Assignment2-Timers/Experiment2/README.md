@@ -10,9 +10,8 @@ This is the circuite:
 
 
 
+‌
 ## Table of content:
-
-This is the list of current compeleted assinments:
 * [Proteus File](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment2-Timers/Experiment2/Proteus/TimersEXP2.pdsprj)
 * [CodeVision AVR File](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment2-Timers/Experiment2/AVR/TimersEXP2.prj) 
 * [Hex File](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment2-Timers/Experiment2/AVR/Debug/ExeTimersEXP2.hex) 
