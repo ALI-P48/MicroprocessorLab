@@ -1,0 +1,10 @@
+VERSION:3 SOURCE_TIMESTAMP:52221F24
+NODE:I LEVEL:0 LINE:20 "C:\cvavr\inc\mega16.h"
+NODE:I LEVEL:0 LINE:21 "C:\cvavr\inc\alcd.h"
+NODE:V LEVEL:0 LINE:23 "delay -> R4,R5"
+NODE:V LEVEL:0 LINE:24 "cursorX -> R6,R7"
+NODE:V LEVEL:0 LINE:25 "cursorY -> R8,R9"
+NODE:V LEVEL:0 LINE:26 "*alphabet -> R10,R11"
+NODE:V LEVEL:0 LINE:27 "index -> R12,R13"
+NODE:F LEVEL:0 LINE:29 "timer0_ovf_isr(void)"
+NODE:F LEVEL:0 LINE:55 "main(void)"
