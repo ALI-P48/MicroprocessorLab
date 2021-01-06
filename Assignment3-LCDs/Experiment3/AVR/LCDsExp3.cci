@@ -1,0 +1,12 @@
+VERSION:3 SOURCE_TIMESTAMP:52269162
+NODE:I LEVEL:0 LINE:20 "C:\cvavr\inc\mega16.h"
+NODE:I LEVEL:0 LINE:21 "C:\cvavr\inc\alcd.h"
+NODE:I LEVEL:0 LINE:22 "C:\cvavr\inc\stdio.h"
+NODE:I LEVEL:0 LINE:23 "C:\cvavr\inc\delay.h"
+NODE:V LEVEL:0 LINE:25 "positiveEdge -> R4,R5"
+NODE:V LEVEL:0 LINE:26 "negativeEdge -> R6,R7"
+NODE:V LEVEL:0 LINE:27 "end -> R8,R9"
+NODE:V LEVEL:0 LINE:28 "frequency -> RAM:????"
+NODE:V LEVEL:0 LINE:29 "period -> R10,R11"
+NODE:V LEVEL:0 LINE:30 "freq -> RAM:????"
+NODE:F LEVEL:0 LINE:32 "main(void)"
