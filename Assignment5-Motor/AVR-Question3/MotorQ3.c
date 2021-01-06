@@ -1,7 +1,7 @@
 /*******************************************************
-Project : MotorQ2
+Project : Alireza Majari
 Version : 1.00
-Date    : 1/7/2021
+Date    : 1/6/2021
 Author  : Alireza Majari
 Company : P48
 Comments: 
@@ -20,7 +20,6 @@ Data Stack size         : 256
 #include <mega16.h>
 
 int delay;
-int timerStarted;
 int states[4][4] = {
     {1, 0, 0, 1},
     {1, 0, 1, 0},
@@ -28,50 +27,48 @@ int states[4][4] = {
     {0, 1, 0, 1}
 };
 int currentState;
+int direction;
+
 
 interrupt [TIM0_OVF] void timer0_ovf_isr(void)
 {
     TCNT0=0x0C;
-
-    if(timerStarted==1) {
-        if(delay==0) {
-            PORTA.0 = states[currentState][0];  
-            PORTA.1 = states[currentState][1];
-            PORTA.2 = states[currentState][2];
-            PORTA.3 = states[currentState][3];
-        }
-        
-        if(delay>5 && delay<=10) {
-            PORTA = 0x00;
-        }  
-        
-        if(delay == 10){
-            delay = 0;  
-            if(currentState<3) {
-                ++currentState;
-            } else {
-                currentState=0;
-                timerStarted=0;
-            }
+    
+    PORTA.0 = states[currentState][0];  
+    PORTA.1 = states[currentState][1];
+    PORTA.2 = states[currentState][2];
+    PORTA.3 = states[currentState][3];
+    
+    if(direction>0) {
+        if(currentState<3) {
+            ++currentState;
         } else {
-            ++delay;
-        }   
+            currentState=0;
+        }  
+    } else {
+        if(currentState>0) {
+            --currentState;
+        } else {
+            currentState=3;
+        }     
     }
+         
+    
 }
 
 void main(void)
-{ 
+{
     delay = 0;  
-    currentState = 0;
-    timerStarted=0;
+    currentState = 1; 
+    direction = 1;
     
     DDRC = 0x00;   
     PINC = 0x00;  
        
     DDRA = 0xff;  
-    PORTA = 0x00;
+    PORTA = 0x00; 
 
-    TCCR0=(0<<WGM00) | (0<<COM01) | (0<<COM00) | (0<<WGM01) | (1<<CS02) | (0<<CS01) | (0<<CS00);
+    TCCR0=(0<<WGM00) | (0<<COM01) | (0<<COM00) | (0<<WGM01) | (1<<CS02) | (0<<CS01) | (1<<CS00);
     TCNT0=0x0C;
     OCR0=0x00;
     TCCR1A=(0<<COM1A1) | (0<<COM1A0) | (0<<COM1B1) | (0<<COM1B0) | (0<<WGM11) | (0<<WGM10);
@@ -101,9 +98,22 @@ void main(void)
     #asm("sei")
 
     while (1) {
-        if(PINC.2==0 &&  timerStarted==0) { 
-             delay = 0;  
-             timerStarted=1;
+        if(PINC.2==0) { 
+            if(direction>0) {
+                direction = -1;
+                if(currentState>0) {
+                    --currentState;
+                } else {
+                    currentState=3;
+                }      
+            } else {
+                direction = 1;    
+                if(currentState<3) {
+                    ++currentState;
+                } else {
+                    currentState=0;
+                }       
+            }
         }
     }
 }

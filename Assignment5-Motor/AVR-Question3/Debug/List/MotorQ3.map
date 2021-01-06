@@ -11,11 +11,11 @@ Register Allocation
 Variable                                                                          Register  Size
 ------------------------------------------------------------------------------------------------
 delay                                                                             R4,R5        2
-timerStarted                                                                      R6,R7        2
-currentState                                                                      R8,R9        2
+currentState                                                                      R6,R7        2
+direction                                                                         R8,R9        2
 
 FLASH Allocation [words]
 Function                                                                          Address   Size
 ------------------------------------------------------------------------------------------------
-timer0_ovf_isr                                                                    0x0006B    103
-main                                                                              0x000D2     61
+timer0_ovf_isr                                                                    0x0006B     83
+main                                                                              0x000BE     83

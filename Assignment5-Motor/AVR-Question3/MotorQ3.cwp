@@ -81,7 +81,7 @@ INT7Mode=0
 PCMSK=0
 [Timer0]
 T0ClkSource=0
-T0Prescaler=4
+T0Prescaler=5
 T0Mode=0
 T0Output=0
 T0OutputB=0
@@ -495,9 +495,9 @@ DS1302TCEnabled=0
 DS1302Diodes=0
 DS1302ChargeResistor=0
 [ProjectInformation]
-ProjectName=MotorQ2
+ProjectName=Alireza Majari
 ProjectVersion=1.00
-ProjectDate=1/7/2021
+ProjectDate=1/6/2021
 ProjectAuthor=Alireza Majari
 ProjectCompany=P48
 CommentLines=2

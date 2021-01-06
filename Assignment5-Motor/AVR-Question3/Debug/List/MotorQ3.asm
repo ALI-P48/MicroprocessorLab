@@ -1087,10 +1087,10 @@ __DELAY_USW_LOOP:
 ;NAME DEFINITIONS FOR GLOBAL VARIABLES ALLOCATED TO REGISTERS
 	.DEF _delay=R4
 	.DEF _delay_msb=R5
-	.DEF _timerStarted=R6
-	.DEF _timerStarted_msb=R7
-	.DEF _currentState=R8
-	.DEF _currentState_msb=R9
+	.DEF _currentState=R6
+	.DEF _currentState_msb=R7
+	.DEF _direction=R8
+	.DEF _direction_msb=R9
 
 	.CSEG
 	.ORG 0x00
@@ -1210,9 +1210,9 @@ __GLOBAL_INI_END:
 
 	.CSEG
 ;/*******************************************************
-;Project : MotorQ2
+;Project : Alireza Majari
 ;Version : 1.00
-;Date    : 1/7/2021
+;Date    : 1/6/2021
 ;Author  : Alireza Majari
 ;Company : P48
 ;Comments:
@@ -1242,7 +1242,6 @@ __GLOBAL_INI_END:
 	#endif
 ;
 ;int delay;
-;int timerStarted;
 ;int states[4][4] = {
 ;    {1, 0, 0, 1},
 ;    {1, 0, 1, 0},
@@ -1252,9 +1251,11 @@ __GLOBAL_INI_END:
 
 	.DSEG
 ;int currentState;
+;int direction;
+;
 ;
 ;interrupt [TIM0_OVF] void timer0_ovf_isr(void)
-; 0000 0021 {
+; 0000 0022 {
 
 	.CSEG
 _timer0_ovf_isr:
@@ -1264,135 +1265,108 @@ _timer0_ovf_isr:
 	ST   -Y,R31
 	IN   R30,SREG
 	ST   -Y,R30
-; 0000 0022     TCNT0=0x0C;
+; 0000 0023     TCNT0=0x0C;
 	LDI  R30,LOW(12)
 	OUT  0x32,R30
-; 0000 0023 
-; 0000 0024     if(timerStarted==1) {
-	LDI  R30,LOW(1)
-	LDI  R31,HIGH(1)
-	CP   R30,R6
-	CPC  R31,R7
-	BREQ PC+2
-	RJMP _0x4
-; 0000 0025         if(delay==0) {
-	MOV  R0,R4
-	OR   R0,R5
-	BRNE _0x5
-; 0000 0026             PORTA.0 = states[currentState][0];
-	MOVW R30,R8
+; 0000 0024 
+; 0000 0025     PORTA.0 = states[currentState][0];
+	MOVW R30,R6
 	CALL __LSLW3
 	SUBI R30,LOW(-_states)
 	SBCI R31,HIGH(-_states)
 	LD   R30,Z
 	CPI  R30,0
-	BRNE _0x6
+	BRNE _0x4
 	CBI  0x1B,0
-	RJMP _0x7
-_0x6:
+	RJMP _0x5
+_0x4:
 	SBI  0x1B,0
-_0x7:
-; 0000 0027             PORTA.1 = states[currentState][1];
-	MOVW R30,R8
+_0x5:
+; 0000 0026     PORTA.1 = states[currentState][1];
+	MOVW R30,R6
 	CALL __LSLW3
 	__ADDW1MN _states,2
 	LD   R30,Z
 	CPI  R30,0
-	BRNE _0x8
+	BRNE _0x6
 	CBI  0x1B,1
-	RJMP _0x9
-_0x8:
+	RJMP _0x7
+_0x6:
 	SBI  0x1B,1
-_0x9:
-; 0000 0028             PORTA.2 = states[currentState][2];
-	MOVW R30,R8
+_0x7:
+; 0000 0027     PORTA.2 = states[currentState][2];
+	MOVW R30,R6
 	CALL __LSLW3
 	__ADDW1MN _states,4
 	LD   R30,Z
 	CPI  R30,0
-	BRNE _0xA
+	BRNE _0x8
 	CBI  0x1B,2
-	RJMP _0xB
-_0xA:
+	RJMP _0x9
+_0x8:
 	SBI  0x1B,2
-_0xB:
-; 0000 0029             PORTA.3 = states[currentState][3];
-	MOVW R30,R8
+_0x9:
+; 0000 0028     PORTA.3 = states[currentState][3];
+	MOVW R30,R6
 	CALL __LSLW3
 	__ADDW1MN _states,6
 	LD   R30,Z
 	CPI  R30,0
-	BRNE _0xC
+	BRNE _0xA
 	CBI  0x1B,3
-	RJMP _0xD
-_0xC:
+	RJMP _0xB
+_0xA:
 	SBI  0x1B,3
-_0xD:
-; 0000 002A         }
-; 0000 002B 
-; 0000 002C         if(delay>5 && delay<=10) {
-_0x5:
-	LDI  R30,LOW(5)
-	LDI  R31,HIGH(5)
-	CP   R30,R4
-	CPC  R31,R5
-	BRGE _0xF
-	LDI  R30,LOW(10)
-	LDI  R31,HIGH(10)
-	CP   R30,R4
-	CPC  R31,R5
-	BRGE _0x10
-_0xF:
-	RJMP _0xE
-_0x10:
-; 0000 002D             PORTA = 0x00;
-	LDI  R30,LOW(0)
-	OUT  0x1B,R30
-; 0000 002E         }
-; 0000 002F 
-; 0000 0030         if(delay == 10){
-_0xE:
-	LDI  R30,LOW(10)
-	LDI  R31,HIGH(10)
-	CP   R30,R4
-	CPC  R31,R5
-	BRNE _0x11
-; 0000 0031             delay = 0;
-	CLR  R4
-	CLR  R5
-; 0000 0032             if(currentState<3) {
+_0xB:
+; 0000 0029 
+; 0000 002A     if(direction>0) {
+	CLR  R0
+	CP   R0,R8
+	CPC  R0,R9
+	BRGE _0xC
+; 0000 002B         if(currentState<3) {
 	LDI  R30,LOW(3)
 	LDI  R31,HIGH(3)
-	CP   R8,R30
-	CPC  R9,R31
-	BRGE _0x12
-; 0000 0033                 ++currentState;
-	MOVW R30,R8
+	CP   R6,R30
+	CPC  R7,R31
+	BRGE _0xD
+; 0000 002C             ++currentState;
+	MOVW R30,R6
 	ADIW R30,1
-	MOVW R8,R30
-; 0000 0034             } else {
-	RJMP _0x13
-_0x12:
-; 0000 0035                 currentState=0;
-	CLR  R8
-	CLR  R9
-; 0000 0036                 timerStarted=0;
+	MOVW R6,R30
+; 0000 002D         } else {
+	RJMP _0xE
+_0xD:
+; 0000 002E             currentState=0;
 	CLR  R6
 	CLR  R7
-; 0000 0037             }
-_0x13:
-; 0000 0038         } else {
-	RJMP _0x14
-_0x11:
-; 0000 0039             ++delay;
-	MOVW R30,R4
-	ADIW R30,1
-	MOVW R4,R30
-; 0000 003A         }
-_0x14:
-; 0000 003B     }
-; 0000 003C }
-_0x4:
+; 0000 002F         }
+_0xE:
+; 0000 0030     } else {
+	RJMP _0xF
+_0xC:
+; 0000 0031         if(currentState>0) {
+	CLR  R0
+	CP   R0,R6
+	CPC  R0,R7
+	BRGE _0x10
+; 0000 0032             --currentState;
+	MOVW R30,R6
+	SBIW R30,1
+	RJMP _0x1D
+; 0000 0033         } else {
+_0x10:
+; 0000 0034             currentState=3;
+	LDI  R30,LOW(3)
+	LDI  R31,HIGH(3)
+_0x1D:
+	MOVW R6,R30
+; 0000 0035         }
+; 0000 0036     }
+_0xF:
+; 0000 0037 
+; 0000 0038 
+; 0000 0039 }
 	LD   R30,Y+
 	OUT  SREG,R30
 	LD   R31,Y+
@@ -1402,121 +1376,160 @@ _0x4:
 ; .FEND
 ;
 ;void main(void)
-; 0000 003F {
+; 0000 003C {
 _main:
 ; .FSTART _main
-; 0000 0040     delay = 0;
+; 0000 003D     delay = 0;
 	CLR  R4
 	CLR  R5
-; 0000 0041     currentState = 0;
-	CLR  R8
-	CLR  R9
-; 0000 0042     timerStarted=0;
-	CLR  R6
-	CLR  R7
-; 0000 0043 
-; 0000 0044     DDRC = 0x00;
-	LDI  R30,LOW(0)
-	OUT  0x14,R30
-; 0000 0045     PINC = 0x00;
-	OUT  0x13,R30
-; 0000 0046 
-; 0000 0047     DDRA = 0xff;
-	LDI  R30,LOW(255)
-	OUT  0x1A,R30
-; 0000 0048     PORTA = 0x00;
-	LDI  R30,LOW(0)
-	OUT  0x1B,R30
-; 0000 0049 
-; 0000 004A     TCCR0=(0<<WGM00) | (0<<COM01) | (0<<COM00) | (0<<WGM01) | (1<<CS02) | (0<<CS01) | (0<<CS00);
-	LDI  R30,LOW(4)
-	OUT  0x33,R30
-; 0000 004B     TCNT0=0x0C;
-	LDI  R30,LOW(12)
-	OUT  0x32,R30
-; 0000 004C     OCR0=0x00;
-	LDI  R30,LOW(0)
-	OUT  0x3C,R30
-; 0000 004D     TCCR1A=(0<<COM1A1) | (0<<COM1A0) | (0<<COM1B1) | (0<<COM1B0) | (0<<WGM11) | (0<<WGM10);
-	OUT  0x2F,R30
-; 0000 004E     TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (0<<WGM12) | (0<<CS12) | (0<<CS11) | (0<<CS10);
-	OUT  0x2E,R30
-; 0000 004F     TCNT1H=0x00;
-	OUT  0x2D,R30
-; 0000 0050     TCNT1L=0x00;
-	OUT  0x2C,R30
-; 0000 0051     ICR1H=0x00;
-	OUT  0x27,R30
-; 0000 0052     ICR1L=0x00;
-	OUT  0x26,R30
-; 0000 0053     OCR1AH=0x00;
-	OUT  0x2B,R30
-; 0000 0054     OCR1AL=0x00;
-	OUT  0x2A,R30
-; 0000 0055     OCR1BH=0x00;
-	OUT  0x29,R30
-; 0000 0056     OCR1BL=0x00;
-	OUT  0x28,R30
-; 0000 0057     ASSR=0<<AS2;
-	OUT  0x22,R30
-; 0000 0058     TCCR2=(0<<PWM2) | (0<<COM21) | (0<<COM20) | (0<<CTC2) | (0<<CS22) | (0<<CS21) | (0<<CS20);
-	OUT  0x25,R30
-; 0000 0059     TCNT2=0x00;
-	OUT  0x24,R30
-; 0000 005A     OCR2=0x00;
-	OUT  0x23,R30
-; 0000 005B     TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (0<<OCIE0) | (1<<TOIE0);
-	LDI  R30,LOW(1)
-	OUT  0x39,R30
-; 0000 005C     MCUCR=(0<<ISC11) | (0<<ISC10) | (0<<ISC01) | (0<<ISC00);
-	LDI  R30,LOW(0)
-	OUT  0x35,R30
-; 0000 005D     MCUCSR=(0<<ISC2);
-	OUT  0x34,R30
-; 0000 005E     UCSRB=(0<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (0<<RXEN) | (0<<TXEN) | (0<<UCSZ2) | (0<<RXB8) | (0<<TXB8);
-	OUT  0xA,R30
-; 0000 005F     ACSR=(1<<ACD) | (0<<ACBG) | (0<<ACO) | (0<<ACI) | (0<<ACIE) | (0<<ACIC) | (0<<ACIS1) | (0<<ACIS0);
-	LDI  R30,LOW(128)
-	OUT  0x8,R30
-; 0000 0060     SFIOR=(0<<ACME);
-	LDI  R30,LOW(0)
-	OUT  0x30,R30
-; 0000 0061     ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADATE) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (0<<ADPS1) | (0<<ADPS0);
-	OUT  0x6,R30
-; 0000 0062     SPCR=(0<<SPIE) | (0<<SPE) | (0<<DORD) | (0<<MSTR) | (0<<CPOL) | (0<<CPHA) | (0<<SPR1) | (0<<SPR0);
-	OUT  0xD,R30
-; 0000 0063     TWCR=(0<<TWEA) | (0<<TWSTA) | (0<<TWSTO) | (0<<TWEN) | (0<<TWIE);
-	OUT  0x36,R30
-; 0000 0064 
-; 0000 0065     #asm("sei")
-	sei
-; 0000 0066 
-; 0000 0067     while (1) {
-_0x15:
-; 0000 0068         if(PINC.2==0 &&  timerStarted==0) {
-	SBIC 0x13,2
-	RJMP _0x19
-	CLR  R0
-	CP   R0,R6
-	CPC  R0,R7
-	BREQ _0x1A
-_0x19:
-	RJMP _0x18
-_0x1A:
-; 0000 0069              delay = 0;
-	CLR  R4
-	CLR  R5
-; 0000 006A              timerStarted=1;
+; 0000 003E     currentState = 1;
 	LDI  R30,LOW(1)
 	LDI  R31,HIGH(1)
 	MOVW R6,R30
-; 0000 006B         }
-; 0000 006C     }
-_0x18:
+; 0000 003F     direction = 1;
+	MOVW R8,R30
+; 0000 0040 
+; 0000 0041     DDRC = 0x00;
+	LDI  R30,LOW(0)
+	OUT  0x14,R30
+; 0000 0042     PINC = 0x00;
+	OUT  0x13,R30
+; 0000 0043 
+; 0000 0044     DDRA = 0xff;
+	LDI  R30,LOW(255)
+	OUT  0x1A,R30
+; 0000 0045     PORTA = 0x00;
+	LDI  R30,LOW(0)
+	OUT  0x1B,R30
+; 0000 0046 
+; 0000 0047     TCCR0=(0<<WGM00) | (0<<COM01) | (0<<COM00) | (0<<WGM01) | (1<<CS02) | (0<<CS01) | (1<<CS00);
+	LDI  R30,LOW(5)
+	OUT  0x33,R30
+; 0000 0048     TCNT0=0x0C;
+	LDI  R30,LOW(12)
+	OUT  0x32,R30
+; 0000 0049     OCR0=0x00;
+	LDI  R30,LOW(0)
+	OUT  0x3C,R30
+; 0000 004A     TCCR1A=(0<<COM1A1) | (0<<COM1A0) | (0<<COM1B1) | (0<<COM1B0) | (0<<WGM11) | (0<<WGM10);
+	OUT  0x2F,R30
+; 0000 004B     TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (0<<WGM12) | (0<<CS12) | (0<<CS11) | (0<<CS10);
+	OUT  0x2E,R30
+; 0000 004C     TCNT1H=0x00;
+	OUT  0x2D,R30
+; 0000 004D     TCNT1L=0x00;
+	OUT  0x2C,R30
+; 0000 004E     ICR1H=0x00;
+	OUT  0x27,R30
+; 0000 004F     ICR1L=0x00;
+	OUT  0x26,R30
+; 0000 0050     OCR1AH=0x00;
+	OUT  0x2B,R30
+; 0000 0051     OCR1AL=0x00;
+	OUT  0x2A,R30
+; 0000 0052     OCR1BH=0x00;
+	OUT  0x29,R30
+; 0000 0053     OCR1BL=0x00;
+	OUT  0x28,R30
+; 0000 0054     ASSR=0<<AS2;
+	OUT  0x22,R30
+; 0000 0055     TCCR2=(0<<PWM2) | (0<<COM21) | (0<<COM20) | (0<<CTC2) | (0<<CS22) | (0<<CS21) | (0<<CS20);
+	OUT  0x25,R30
+; 0000 0056     TCNT2=0x00;
+	OUT  0x24,R30
+; 0000 0057     OCR2=0x00;
+	OUT  0x23,R30
+; 0000 0058     TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (0<<OCIE0) | (1<<TOIE0);
+	LDI  R30,LOW(1)
+	OUT  0x39,R30
+; 0000 0059     MCUCR=(0<<ISC11) | (0<<ISC10) | (0<<ISC01) | (0<<ISC00);
+	LDI  R30,LOW(0)
+	OUT  0x35,R30
+; 0000 005A     MCUCSR=(0<<ISC2);
+	OUT  0x34,R30
+; 0000 005B     UCSRB=(0<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (0<<RXEN) | (0<<TXEN) | (0<<UCSZ2) | (0<<RXB8) | (0<<TXB8);
+	OUT  0xA,R30
+; 0000 005C     ACSR=(1<<ACD) | (0<<ACBG) | (0<<ACO) | (0<<ACI) | (0<<ACIE) | (0<<ACIC) | (0<<ACIS1) | (0<<ACIS0);
+	LDI  R30,LOW(128)
+	OUT  0x8,R30
+; 0000 005D     SFIOR=(0<<ACME);
+	LDI  R30,LOW(0)
+	OUT  0x30,R30
+; 0000 005E     ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADATE) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (0<<ADPS1) | (0<<ADPS0);
+	OUT  0x6,R30
+; 0000 005F     SPCR=(0<<SPIE) | (0<<SPE) | (0<<DORD) | (0<<MSTR) | (0<<CPOL) | (0<<CPHA) | (0<<SPR1) | (0<<SPR0);
+	OUT  0xD,R30
+; 0000 0060     TWCR=(0<<TWEA) | (0<<TWSTA) | (0<<TWSTO) | (0<<TWEN) | (0<<TWIE);
+	OUT  0x36,R30
+; 0000 0061 
+; 0000 0062     #asm("sei")
+	sei
+; 0000 0063 
+; 0000 0064     while (1) {
+_0x12:
+; 0000 0065         if(PINC.2==0) {
+	SBIC 0x13,2
 	RJMP _0x15
-; 0000 006D }
-_0x1B:
+; 0000 0066             if(direction>0) {
+	CLR  R0
+	CP   R0,R8
+	CPC  R0,R9
+	BRGE _0x16
+; 0000 0067                 direction = -1;
+	LDI  R30,LOW(65535)
+	LDI  R31,HIGH(65535)
+	MOVW R8,R30
+; 0000 0068                 if(currentState>0) {
+	CLR  R0
+	CP   R0,R6
+	CPC  R0,R7
+	BRGE _0x17
+; 0000 0069                     --currentState;
+	MOVW R30,R6
+	SBIW R30,1
+	RJMP _0x1E
+; 0000 006A                 } else {
+_0x17:
+; 0000 006B                     currentState=3;
+	LDI  R30,LOW(3)
+	LDI  R31,HIGH(3)
+_0x1E:
+	MOVW R6,R30
+; 0000 006C                 }
+; 0000 006D             } else {
+	RJMP _0x19
+_0x16:
+; 0000 006E                 direction = 1;
+	LDI  R30,LOW(1)
+	LDI  R31,HIGH(1)
+	MOVW R8,R30
+; 0000 006F                 if(currentState<3) {
+	LDI  R30,LOW(3)
+	LDI  R31,HIGH(3)
+	CP   R6,R30
+	CPC  R7,R31
+	BRGE _0x1A
+; 0000 0070                     ++currentState;
+	MOVW R30,R6
+	ADIW R30,1
+	MOVW R6,R30
+; 0000 0071                 } else {
 	RJMP _0x1B
+_0x1A:
+; 0000 0072                     currentState=0;
+	CLR  R6
+	CLR  R7
+; 0000 0073                 }
+_0x1B:
+; 0000 0074             }
+_0x19:
+; 0000 0075         }
+; 0000 0076     }
+_0x15:
+	RJMP _0x12
+; 0000 0077 }
+_0x1C:
+	RJMP _0x1C
 ; .FEND
 
 	.DSEG
