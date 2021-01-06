@@ -8,7 +8,7 @@ Print English Alphabet from A to Z with Timer0 on a LCD.
 
 This is the circuite:
 
-![](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment3-LCDs/Experiment2/Pictures/Circuit-On.jpg)
+![](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment3-LCDs/Experiment2/Pictures/Circuit.jpg)
 
 
 
