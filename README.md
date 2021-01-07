@@ -12,6 +12,9 @@ Solutions for Microprocessor Lab Assignments.
 This is the list of current compeleted assinments:
 * [Assignment1](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment1-LEDs/) - 8 LED Blinking Experiment
 * [Assignment2](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment2-Timers/) - Timer0 & Timer1 7Segment Experiment
+* [Assignment3](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment3-LCDs/) - LCD: Hello World, Alphabet and Frequency
+* [Assignment4](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment4-PCB/) - PCB layout for Assignment2-Experiment2
+* [Assignment5](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment5-Motor/) - Motor Experiments
 
 
 ‌
