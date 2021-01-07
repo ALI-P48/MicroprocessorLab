@@ -8,7 +8,7 @@ Solutions for Microprocessor Lab Assignments.
 
 
 ‌
-## Table of content:
+## Content:
 This is the list of current compeleted assinments:
 * [Assignment1](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment1-LEDs/) - 8 LED Blinking Experiment
 * [Assignment2](https://github.com/ALI-P48/MicroprocessorLab/blob/main/Assignment2-Timers/) - Timer0 & Timer1 7Segment Experiment
